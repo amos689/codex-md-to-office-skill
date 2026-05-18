@@ -1,0 +1,4 @@
+interface:
+  display_name: "MD to Office"
+  short_description: "Convert Markdown into Word, slides, and PDFs"
+  default_prompt: "Use $md-to-office to convert this Markdown file to DOCX."

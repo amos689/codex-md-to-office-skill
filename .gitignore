@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+output/
+tmp/
+*.docx
+*.pptx
+*.pdf
+!examples/*.pdf
