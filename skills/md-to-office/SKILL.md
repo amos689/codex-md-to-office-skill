@@ -48,6 +48,9 @@ python3 scripts/convert_markdown.py input.md --output output.docx --dry-run
 
 - Use YAML frontmatter for title, author, date, abstract, and document metadata.
 - Use `#`, `##`, and `###` consistently; Pandoc maps headings to Word styles.
+- Use standard LaTeX math delimiters for editable Word equations:
+  - Inline: `$E = mc^2$` or `\(E = mc^2\)`
+  - Block: `$$ ... $$` or `\[ ... \]`
 - Use normal Markdown tables for simple tables. Complex tables may need DOCX cleanup after conversion.
 - Use relative image paths near the Markdown file. The script sets Pandoc's resource path to the input file directories.
 - For slides, structure Markdown with `#` for sections and `##` for individual slides.
@@ -58,6 +61,7 @@ Use direct Pandoc when the bundled script is too restrictive:
 
 ```bash
 pandoc input.md -o output.docx
+pandoc --from markdown+tex_math_dollars+tex_math_single_backslash+tex_math_double_backslash input.md -o output.docx
 pandoc input.md --toc --toc-depth=3 -o output.docx
 pandoc input.md --reference-doc=template.docx -o output.docx
 pandoc slides.md --reference-doc=template.pptx -o deck.pptx
@@ -66,6 +70,7 @@ pandoc slides.md --reference-doc=template.pptx -o deck.pptx
 ## Quality Expectations
 
 - Do not promise pixel-perfect Word layout from Markdown alone.
+- For DOCX output, standard LaTeX math should become editable Word OMML equations. If formulas remain literal text, check that they are not inside code fences and that custom macros are expanded or defined in the document.
 - Use a reference DOCX/PPTX template for branded typography, margins, heading styles, or slide themes.
 - Check generated documents before delivery. At minimum, confirm file existence and basic package validity; render or visually inspect when layout matters.
 - Mention missing dependencies clearly. This skill requires `pandoc` on `PATH`.

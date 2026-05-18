@@ -19,6 +19,13 @@ from pathlib import Path
 
 
 SUPPORTED_FORMATS = {"docx", "pptx", "pdf", "html", "tex", "epub", "odt", "rtf"}
+DEFAULT_MARKDOWN_READER = (
+    "markdown"
+    "+tex_math_dollars"
+    "+tex_math_single_backslash"
+    "+tex_math_double_backslash"
+    "+latex_macros"
+)
 ZIP_FORMAT_MARKERS = {
     "docx": "word/document.xml",
     "pptx": "ppt/presentation.xml",
@@ -91,7 +98,7 @@ def build_command(args: argparse.Namespace) -> tuple[list[str], Path, str]:
     output = raw_output or default_output(inputs, fmt)
     output.parent.mkdir(parents=True, exist_ok=True)
 
-    cmd = [pandoc, *[str(path) for path in inputs], "-o", str(output)]
+    cmd = [pandoc, "--from", args.input_format, *[str(path) for path in inputs], "-o", str(output)]
 
     if args.reference_doc:
         reference = Path(args.reference_doc).expanduser().resolve()
@@ -128,6 +135,15 @@ def main() -> int:
     parser.add_argument("inputs", nargs="+", help="Markdown input file(s)")
     parser.add_argument("-o", "--output", help="Output file path")
     parser.add_argument("--to", choices=sorted(SUPPORTED_FORMATS), help="Target format")
+    parser.add_argument(
+        "--from",
+        dest="input_format",
+        default=DEFAULT_MARKDOWN_READER,
+        help=(
+            "Pandoc input reader. Defaults to Markdown with $, $$, "
+            "\\(...\\), and \\[...\\] LaTeX math enabled."
+        ),
+    )
     parser.add_argument("--reference-doc", help="DOCX/PPTX reference template")
     parser.add_argument("--toc", action="store_true", help="Include a table of contents")
     parser.add_argument("--toc-depth", type=int, help="Table-of-contents heading depth")

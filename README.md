@@ -7,6 +7,7 @@ This repository packages a Codex-ready `md-to-office` skill for turning Markdown
 ## What It Does
 
 - Converts one or more `.md` files to `.docx`, `.pptx`, `.pdf`, and other Pandoc-supported document formats.
+- Converts standard LaTeX math in Markdown into editable Word equations for DOCX output.
 - Supports `--reference-doc` for Word and PowerPoint templates.
 - Validates generated DOCX/PPTX files as Office ZIP packages.
 - Provides a small local wrapper script so Codex can run conversions without shell interpolation.
@@ -53,6 +54,22 @@ python3 skills/md-to-office/scripts/convert_markdown.py report.md \
   --output report.docx \
   --reference-doc template.docx \
   --toc
+```
+
+Markdown math is supported with the common delimiter forms:
+
+```markdown
+Inline: $E = mc^2$ or \(E = mc^2\)
+
+Block:
+
+$$
+\int_0^1 x^2\,dx = \frac{1}{3}
+$$
+
+\[
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+\]
 ```
 
 Dry-run the Pandoc command:
