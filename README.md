@@ -16,18 +16,16 @@ This repository packages a Codex-ready `md-to-office` skill for turning Markdown
 From Codex, ask:
 
 ```text
-Use $skill-installer to install https://github.com/OWNER/codex-md-to-office-skill/tree/main/skills/md-to-office
+Use $skill-installer to install https://github.com/amos689/codex-md-to-office-skill/tree/main/skills/md-to-office
 ```
 
 Or run the installer directly:
 
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
-  --repo OWNER/codex-md-to-office-skill \
+  --repo amos689/codex-md-to-office-skill \
   --path skills/md-to-office
 ```
-
-Replace `OWNER` with the GitHub account or organization that hosts the repository.
 
 After installation, restart Codex or open a new Codex conversation so the new skill list is refreshed.
 
